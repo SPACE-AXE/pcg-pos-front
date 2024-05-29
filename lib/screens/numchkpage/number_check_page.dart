@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pcg_pos/screens/numchkpage/widget/animation_container.dart';
+import 'package:pcg_pos/widget/app_bar.dart';
 
-class NumberCheckPage extends StatelessWidget {
+class NumberCheckPage extends StatefulWidget {
   final String title;
 
   const NumberCheckPage({
@@ -10,8 +11,26 @@ class NumberCheckPage extends StatelessWidget {
   });
 
   @override
+  State<NumberCheckPage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<NumberCheckPage> {
+  bool _isEntry = true;
+
+  void _toggleEntryExit() {
+    setState(() {
+      _isEntry = !_isEntry;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: MyAppBar(
+        title: widget.title,
+        isEntry: _isEntry,
+        onToggle: _toggleEntryExit,
+      ),
       body: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
