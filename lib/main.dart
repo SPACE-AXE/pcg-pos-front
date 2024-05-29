@@ -14,19 +14,21 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  final String appTitle = 'Park-Charge-Go POS';
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'pcg_pos_front',
+      title: appTitle,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
+      initialRoute: '/',
       routes: {
-        '/': (context) => const MyHomePage(title: 'Park-Charge-Go POS'),
-        '/carnum': (context) =>
-            const NumberCheckPage(title: 'Park-Charge-Go POS'),
+        '/': (context) => MyHomePage(title: appTitle),
+        '/carnum': (context) => NumberCheckPage(title: appTitle),
       },
     );
   }
