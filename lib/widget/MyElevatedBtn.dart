@@ -15,7 +15,7 @@ class MyElevatedBtn extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         alignment: Alignment.center,
-        fixedSize: const Size(180, 80),
+        fixedSize: const Size(200, 80),
         backgroundColor: const Color(0xff39c5bb),
         foregroundColor: Colors.white,
         elevation: 5,

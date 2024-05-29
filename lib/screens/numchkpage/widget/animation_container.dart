@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:pcg_pos/widget/MyElevatedBtn.dart';
-import 'package:pcg_pos/screens/mainpage/widget/app_bar.dart';
+import 'package:pcg_pos/widget/app_bar.dart';
 
 class NumCheck extends StatefulWidget {
   final String title;
@@ -17,10 +17,22 @@ class NumCheck extends StatefulWidget {
 
 class _NumCheckState extends State<NumCheck> {
   bool _isExpanded = false;
+  bool _isEntry = true;
+
+  void _toggleEntryExit() {
+    setState(() {
+      _isEntry = !_isEntry;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: MyAppBar(title: widget.title),
+        appBar: MyAppBar(
+          title: widget.title,
+          isEntry: _isEntry,
+          onToggle: _toggleEntryExit,
+        ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
