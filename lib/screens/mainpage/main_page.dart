@@ -3,9 +3,12 @@ import 'package:pcg_pos/widget/app_bar.dart';
 import 'package:pcg_pos/widget/MyElevatedBtn.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
   final String title;
+
+  const MyHomePage({
+    super.key,
+    required this.title,
+  });
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
