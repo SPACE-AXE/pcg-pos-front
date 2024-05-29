@@ -24,7 +24,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         Builder(
           builder: (context) {
             return const Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: EdgeInsets.only(right: 20.0),
               child: CurrentTime(),
             );
           },
@@ -42,11 +42,13 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             children: const [
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0),
-                child: Text('입차'),
+                child: Text('입차',
+                    style: TextStyle(color: Colors.white, fontSize: 20)),
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0),
-                child: Text('출차'),
+                child: Text('출차',
+                    style: TextStyle(color: Colors.white, fontSize: 20)),
               ),
             ],
           ),

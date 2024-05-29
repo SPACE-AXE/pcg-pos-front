@@ -12,17 +12,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _currentIndex = 0;
-  late List<Widget> _pages;
   bool _isEntry = true;
-
-  @override
-  void initState() {
-    super.initState();
-    _pages = [
-      // 여기에 페이지 목록을 추가하세요.
-    ];
-  }
 
   void _toggleEntryExit() {
     setState(() {
