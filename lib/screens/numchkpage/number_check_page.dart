@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pcg_pos/screens/numchkpage/widget/animation_container.dart';
-import 'package:pcg_pos/widget/app_bar.dart';
+import 'package:pcg_pos/widget/toggle_app_bar.dart';
 
 class NumberCheckPage extends StatefulWidget {
   final String title;
