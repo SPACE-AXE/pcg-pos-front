@@ -3,14 +3,10 @@ import 'package:pcg_pos/widget/cur_time.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
-  final bool isEntry;
-  final VoidCallback onToggle;
 
   const MyAppBar({
     super.key,
     required this.title,
-    required this.isEntry,
-    required this.onToggle,
   });
 
   @override
@@ -30,30 +26,6 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           },
         ),
       ],
-      flexibleSpace: Align(
-        alignment: Alignment.center,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-          child: ToggleButtons(
-            isSelected: [isEntry, !isEntry],
-            onPressed: (index) {
-              onToggle();
-            },
-            children: const [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                child: Text('입차',
-                    style: TextStyle(color: Colors.white, fontSize: 20)),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                child: Text('출차',
-                    style: TextStyle(color: Colors.white, fontSize: 20)),
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 

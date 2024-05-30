@@ -26,7 +26,7 @@ class _MyHomePageState extends State<NumberCheckPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(
+      appBar: MyToggleAppBar(
         title: widget.title,
         isEntry: _isEntry,
         onToggle: _toggleEntryExit,

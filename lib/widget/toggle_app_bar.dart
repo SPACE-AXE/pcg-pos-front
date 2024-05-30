@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:pcg_pos/widget/cur_time.dart';
 
-class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
+class MyToggleAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final bool isEntry;
   final VoidCallback onToggle;
 
-  const MyAppBar({
+  const MyToggleAppBar({
     super.key,
     required this.title,
     required this.isEntry,
