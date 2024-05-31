@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:pcg_pos/car_data.dart';
 import 'package:pcg_pos/screens/numinpage/widget/keypad_container.dart';
 import 'package:pcg_pos/widget/toggle_app_bar.dart';
+import 'package:pcg_pos/services/car_enter_api.dart';
 
 class NumberInputPage extends StatefulWidget {
   final String title;
@@ -98,6 +100,51 @@ class _NumberInputPageState extends State<NumberInputPage> {
     debugPrint(carNum);
   }
 
+  Future<void> _sendCarNum() async {
+    const int parkId = 1;
+    bool success = await ApiService.sendCarNum(parkId, carNum);
+    if (success) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('성공'),
+            content: Text('차량 번호가 성공적으로 전송되었습니다.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                },
+                child: Text('확인'),
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      // 요청이 실패했음을 나타내는 팝업 표시
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('실패'),
+            content: Text('차량 번호 전송에 실패했습니다.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                },
+                child: Text('확인'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -169,7 +216,9 @@ class _NumberInputPageState extends State<NumberInputPage> {
                         ),
                       ),
                       onPressed: () async {
-                        Navigator.pushReplacementNamed(context, '/');
+                        _isEntry
+                            ? await _sendCarNum()
+                            : _sendCarNum(); //TODO: 뒤쪽은 출차 페이지로 넘어가야함
                       },
                       child: Text(
                         _isEntry ? '입차' : '출차',

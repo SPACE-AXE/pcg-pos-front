@@ -6,7 +6,6 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:pcg_pos/screens/carnumpage/car_num_page.dart';
 import 'package:pcg_pos/screens/mainpage/main_page.dart';
 import 'package:pcg_pos/screens/numinpage/number_input_page.dart';
 
