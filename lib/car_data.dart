@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ChargeData extends ChangeNotifier {
+class CarData extends ChangeNotifier {
   String? carNum;
   String? chargeOption;
   String? setTime;
@@ -11,7 +11,7 @@ class ChargeData extends ChangeNotifier {
   String? setAmount;
   String? chargeAmount;
 
-  ChargeData({
+  CarData({
     this.carNum,
     this.chargeOption,
     this.setTime,
@@ -22,8 +22,8 @@ class ChargeData extends ChangeNotifier {
     this.chargeAmount,
   });
 
-  factory ChargeData.makeData(String carNum) {
-    return ChargeData(
+  factory CarData.makeData(String carNum) {
+    return CarData(
       carNum: carNum,
       chargeOption: null,
       setTime: null,
@@ -45,7 +45,7 @@ class ChargeData extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateChargeData(ChargeData data) {
+  void updateChargeData(CarData data) {
     carNum = data.carNum;
     setTime = data.setTime;
     chargeTime = data.chargeTime;
@@ -112,6 +112,6 @@ class ChargeData extends ChangeNotifier {
   }
 }
 
-final chargeDataProvider = ChangeNotifierProvider<ChargeData>((ref) {
-  return ChargeData();
+final chargeDataProvider = ChangeNotifierProvider<CarData>((ref) {
+  return CarData();
 });
