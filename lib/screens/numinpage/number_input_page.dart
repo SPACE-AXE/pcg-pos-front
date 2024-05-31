@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -108,15 +110,15 @@ class _NumberInputPageState extends State<NumberInputPage> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('성공'),
-            content: Text('차량 번호가 성공적으로 전송되었습니다.'),
+            title: const Text('성공'),
+            content: const Text('차량이 성공적으로 입차되었습니다.'),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                   Navigator.of(context).pop();
                 },
-                child: Text('확인'),
+                child: const Text('확인'),
               ),
             ],
           );
@@ -128,15 +130,15 @@ class _NumberInputPageState extends State<NumberInputPage> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('실패'),
-            content: Text('차량 번호 전송에 실패했습니다.'),
+            title: const Text('실패'),
+            content: const Text('차량이 입차되지 않았습니다.'),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                   Navigator.of(context).pop();
                 },
-                child: Text('확인'),
+                child: const Text('확인'),
               ),
             ],
           );
