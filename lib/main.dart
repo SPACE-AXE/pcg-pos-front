@@ -4,13 +4,18 @@ import 'dart:async';
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:pcg_pos/screens/carnumpage/car_num_page.dart';
 import 'package:pcg_pos/screens/mainpage/main_page.dart';
-import 'package:pcg_pos/screens/numchkpage/number_check_page.dart';
+import 'package:pcg_pos/screens/numinpage/number_input_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    const ProviderScope(
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -30,7 +35,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => MyHomePage(title: appTitle),
-        '/carnum': (context) => NumberCheckPage(title: appTitle),
+        '/carnum': (context) => NumberInputPage(title: appTitle),
       },
     );
   }
