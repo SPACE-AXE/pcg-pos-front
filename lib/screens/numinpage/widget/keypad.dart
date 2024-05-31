@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 
 class MyKeyPad extends StatefulWidget {
@@ -40,10 +42,8 @@ class _MyKeyPadState extends State<MyKeyPad> {
       },
       child: AspectRatio(
         aspectRatio: 1.8,
-        child: Container(
-          child: Center(
-            child: renderLabel(),
-          ),
+        child: Center(
+          child: renderLabel(),
         ),
       ),
     );

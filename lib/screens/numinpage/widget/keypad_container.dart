@@ -15,17 +15,15 @@ class KeypadContainer extends StatefulWidget {
 class _KeypadContainerState extends State<KeypadContainer> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          LetKeypad(
-              addCarnum: widget.addCarNum, deleteCarNum: widget.deleteCarNum),
-          // VowelsKeyboard(setCarNum: widget.setCarNum),
-          NumKeypad(
-              addCarnum: widget.addCarNum, deleteCarNum: widget.deleteCarNum),
-        ],
-      ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        LetKeypad(
+            addCarnum: widget.addCarNum, deleteCarNum: widget.deleteCarNum),
+        // VowelsKeyboard(setCarNum: widget.setCarNum),
+        NumKeypad(
+            addCarnum: widget.addCarNum, deleteCarNum: widget.deleteCarNum),
+      ],
     );
   }
 }

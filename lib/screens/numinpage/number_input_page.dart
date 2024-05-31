@@ -139,7 +139,7 @@ class _NumberInputPageState extends State<NumberInputPage> {
                   height: MediaQuery.of(context).size.height * 0.2,
                   child: Center(
                     child: Text(
-                      "$carNum",
+                      carNum,
                       style: const TextStyle(
                         fontSize: 40,
                       ),
