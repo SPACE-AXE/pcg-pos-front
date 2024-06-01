@@ -1,5 +1,5 @@
+import 'dart:async';
 import 'dart:convert';
-
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class ApiService {
@@ -10,15 +10,16 @@ class ApiService {
   });
 
   static Future<bool> sendCarNum(String carNum, IO.Socket socket) async {
-    late dynamic result;
+    final completer = Completer<Map<String, dynamic>>();
 
     socket.emitWithAck('enter', jsonEncode({'carNum': carNum}), ack: (data) {
-      result = data;
+      completer.complete(data);
     });
 
-    final json = jsonDecode(result);
+    Map<String, dynamic> result = await completer.future;
 
-    if (json['paymentId']) {
+    print('$result');
+    if (result.containsKey('paymentId')) {
       return true;
     } else {
       return false;

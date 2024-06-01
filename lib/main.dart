@@ -28,7 +28,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final String appTitle = 'Park-Charge-Go POS';
   late IO.Socket socket;
-  static const String _baseUrl = 'localhost:3000';
+  static const String _baseUrl = 'http://localhost:3000';
 
   @override
   void initState() {
