@@ -23,4 +23,20 @@ class ApiService {
       return false;
     }
   }
+
+  static Future<bool> tryExitCar(String carNum, IO.Socket socket) async {
+    final completer = Completer<Map<String, dynamic>>();
+
+    socket.emitWithAck('exit', {'carNum': carNum}, ack: (data) {
+      completer.complete(data);
+    });
+
+    Map<String, dynamic> result = await completer.future;
+
+    if (result['statusCode'] == 403) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

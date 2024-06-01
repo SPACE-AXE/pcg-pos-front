@@ -88,15 +88,6 @@ class _NumberInputPageState extends State<NumberInputPage> {
     });
   }
 
-  void _navigateToCarOutPage() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => CarOutPage(title: widget.title, carNum: carNum),
-      ),
-    );
-  }
-
   void addCarNum(String value) {
     if (value == 'ㅏ' || value == 'ㅓ' || value == 'ㅗ' || value == 'ㅜ') {
       final tmp = carNum.substring(carNum.length - 1);
@@ -157,6 +148,40 @@ class _NumberInputPageState extends State<NumberInputPage> {
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
+                },
+                child: const Text('확인'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
+  Future<void> _tryExitCar() async {
+    bool success = await ApiService.tryExitCar(carNum, widget.socket);
+
+    if (success) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CarOutPage(
+            title: widget.title,
+            carNum: carNum,
+          ),
+        ),
+      );
+    } else {
+      // 요청이 실패했음을 나타내는 팝업 표시
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('실패'),
+            content: const Text('차량을 출차할 수 없습니다.'),
+            actions: [
+              TextButton(
+                onPressed: () {
                   Navigator.of(context).pop();
                 },
                 child: const Text('확인'),
@@ -239,9 +264,7 @@ class _NumberInputPageState extends State<NumberInputPage> {
                         ),
                       ),
                       onPressed: () async {
-                        _isEntry
-                            ? await _sendCarNum()
-                            : _navigateToCarOutPage();
+                        _isEntry ? await _sendCarNum() : _tryExitCar();
                       },
                       child: Text(
                         _isEntry ? '입차' : '출차',
