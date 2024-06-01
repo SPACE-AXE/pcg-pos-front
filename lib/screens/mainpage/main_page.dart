@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:pcg_pos/screens/numinpage/number_input_page.dart';
 import 'package:pcg_pos/widget/toggle_app_bar.dart';
 import 'package:pcg_pos/widget/MyElevatedBtn.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class MyHomePage extends StatefulWidget {
   final String title;
+  final IO.Socket socket;
 
   const MyHomePage({
     super.key,
     required this.title,
+    required this.socket,
   });
 
   @override
@@ -28,8 +31,11 @@ class _MyHomePageState extends State<MyHomePage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) =>
-            NumberInputPage(title: widget.title, isEntry: _isEntry),
+        builder: (context) => NumberInputPage(
+          title: widget.title,
+          isEntry: _isEntry,
+          socket: widget.socket,
+        ),
       ),
     );
   }

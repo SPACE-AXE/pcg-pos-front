@@ -2,20 +2,24 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 import 'package:pcg_pos/car_data.dart';
+import 'package:pcg_pos/screens/caroutpage/car_out_page.dart';
 import 'package:pcg_pos/screens/numinpage/widget/keypad_container.dart';
 import 'package:pcg_pos/widget/toggle_app_bar.dart';
-import 'package:pcg_pos/services/car_enter_api.dart';
+import 'package:pcg_pos/services/pos_api.dart';
 
 class NumberInputPage extends StatefulWidget {
   final String title;
   final bool isEntry;
+  final IO.Socket socket;
 
   const NumberInputPage({
     super.key,
     required this.title,
     required this.isEntry,
+    required this.socket,
   });
 
   @override
@@ -24,18 +28,6 @@ class NumberInputPage extends StatefulWidget {
 
 class _NumberInputPageState extends State<NumberInputPage> {
   late bool _isEntry;
-
-  @override
-  void initState() {
-    super.initState();
-    _isEntry = widget.isEntry;
-  }
-
-  void _toggleEntryExit() {
-    setState(() {
-      _isEntry = !_isEntry;
-    });
-  }
 
   final List<String> initials = [
     'ㄱ',
@@ -84,6 +76,27 @@ class _NumberInputPageState extends State<NumberInputPage> {
   String carNum = '';
   final int baseCode = 0xAC00;
 
+  @override
+  void initState() {
+    super.initState();
+    _isEntry = widget.isEntry;
+  }
+
+  void _toggleEntryExit() {
+    setState(() {
+      _isEntry = !_isEntry;
+    });
+  }
+
+  void _navigateToCarOutPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CarOutPage(title: widget.title, carNum: carNum),
+      ),
+    );
+  }
+
   void addCarNum(String value) {
     if (value == 'ㅏ' || value == 'ㅓ' || value == 'ㅗ' || value == 'ㅜ') {
       final tmp = carNum.substring(carNum.length - 1);
@@ -111,8 +124,8 @@ class _NumberInputPageState extends State<NumberInputPage> {
   }
 
   Future<void> _sendCarNum() async {
-    const int parkId = 1;
-    bool success = await ApiService.sendCarNum(parkId, carNum);
+    bool success = await ApiService.sendCarNum(carNum, widget.socket);
+
     if (success) {
       showDialog(
         context: context,
@@ -228,7 +241,7 @@ class _NumberInputPageState extends State<NumberInputPage> {
                       onPressed: () async {
                         _isEntry
                             ? await _sendCarNum()
-                            : _sendCarNum(); //TODO: 뒤쪽은 출차 페이지로 넘어가야함
+                            : _navigateToCarOutPage();
                       },
                       child: Text(
                         _isEntry ? '입차' : '출차',
