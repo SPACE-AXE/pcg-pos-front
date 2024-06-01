@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pcg_pos/screens/numinpage/number_input_page.dart';
 import 'package:pcg_pos/widget/toggle_app_bar.dart';
 import 'package:pcg_pos/widget/MyElevatedBtn.dart';
 
@@ -23,6 +24,16 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _navigateToNumberInputPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) =>
+            NumberInputPage(title: widget.title, isEntry: _isEntry),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,9 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
               width: 400,
               height: 168,
               child: MyElevatedBtn(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/carnum');
-                },
+                onPressed: _navigateToNumberInputPage,
                 text: _isEntry ? '차량 입차' : '차량 출차',
               ),
             )

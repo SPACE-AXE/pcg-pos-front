@@ -31,11 +31,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => MyHomePage(title: appTitle),
-        '/carnum': (context) => NumberInputPage(title: appTitle),
-      },
+      home: MyHomePage(title: appTitle),
     );
   }
 }

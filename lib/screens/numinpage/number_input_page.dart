@@ -10,10 +10,12 @@ import 'package:pcg_pos/services/car_enter_api.dart';
 
 class NumberInputPage extends StatefulWidget {
   final String title;
+  final bool isEntry;
 
   const NumberInputPage({
     super.key,
     required this.title,
+    required this.isEntry,
   });
 
   @override
@@ -21,7 +23,13 @@ class NumberInputPage extends StatefulWidget {
 }
 
 class _NumberInputPageState extends State<NumberInputPage> {
-  bool _isEntry = true;
+  late bool _isEntry;
+
+  @override
+  void initState() {
+    super.initState();
+    _isEntry = widget.isEntry;
+  }
 
   void _toggleEntryExit() {
     setState(() {
