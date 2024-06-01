@@ -4,11 +4,10 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  static const String _baseUrl =
-      'https://api.parkchargego.link/api/v1/parking-transaction'; // 일단 입력해놓음
+  static const String _baseUrl = 'https://api.parkchargego.link'; // 일단 입력해놓음
 
   static Future<bool> sendCarNum(int parkId, String carNum) async {
-    String url = '$_baseUrl/carnum';
+    String url = '$_baseUrl/api/v1/parking-transaction';
     try {
       final response = await http.post(
         Uri.parse(url),
@@ -18,7 +17,7 @@ class ApiService {
         body: jsonEncode({'parkId': 1, 'carNum': carNum}),
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         return true;
       } else {
         print('${response.statusCode} Error, carNum: $carNum');
