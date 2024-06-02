@@ -1,117 +1,64 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:json_annotation/json_annotation.dart';
 
-class CarData extends ChangeNotifier {
-  String? carNum;
-  String? chargeOption;
-  String? setTime;
-  String? chargeTime;
-  String? setPrice;
-  String? chargePrice;
-  String? setAmount;
-  String? chargeAmount;
+@JsonSerializable()
+class CarData {
+  final int id;
+  final String entryTime;
+  final String? exitTime;
+  final String? chargeStartTime;
+  final String? chargeTime;
+  final String? paymentTime;
+  final int? chargeAmount;
+  final int? parkingAmount;
+  final int? totalAmount;
+  final String carNum;
+  final bool isPaid;
+  final String paymentId;
 
   CarData({
-    this.carNum,
-    this.chargeOption,
-    this.setTime,
-    this.chargeTime,
-    this.setPrice,
-    this.chargePrice,
-    this.setAmount,
-    this.chargeAmount,
+    required this.id,
+    required this.entryTime,
+    required this.exitTime,
+    required this.chargeStartTime,
+    required this.chargeTime,
+    required this.paymentTime,
+    required this.chargeAmount,
+    required this.parkingAmount,
+    required this.totalAmount,
+    required this.carNum,
+    required this.isPaid,
+    required this.paymentId,
   });
 
-  factory CarData.makeData(String carNum) {
+  factory CarData.fromJson(Map<String, dynamic> json) {
     return CarData(
-      carNum: carNum,
-      chargeOption: null,
-      setTime: null,
-      chargeTime: null,
-      setPrice: null,
-      chargePrice: null,
-      setAmount: null,
-      chargeAmount: null,
+      id: json['id'],
+      entryTime: json['entryTime'],
+      exitTime: json['exitTime'],
+      chargeStartTime: json['chargeStartTime'],
+      chargeTime: json['chargeTime'],
+      paymentTime: json['paymentTime'],
+      chargeAmount: json['chargeAmount'],
+      parkingAmount: json['parkingAmount'],
+      totalAmount: json['totalAmount'],
+      carNum: json['carNum'],
+      isPaid: json['isPaid'],
+      paymentId: json['paymentId'],
     );
   }
 
-  void updateCarNum(String data) {
-    carNum = data;
-    notifyListeners();
-  }
-
-  void updateOption(String data) {
-    chargeOption = data;
-    notifyListeners();
-  }
-
-  void updateChargeData(CarData data) {
-    carNum = data.carNum;
-    setTime = data.setTime;
-    chargeTime = data.chargeTime;
-    setPrice = data.setPrice;
-    chargePrice = data.chargePrice;
-    setAmount = data.setAmount;
-    chargeAmount = data.chargeAmount;
-    chargeOption = data.chargeOption;
-    notifyListeners();
-    debugPrint(
-        "$carNum, $setTime, $chargeTime, $setPrice, $chargePrice, $setAmount, $chargeAmount, $chargeOption");
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'carNum': carNum,
-      'setTime': setTime,
-      'chargeTime': chargeTime,
-      'setPrice': setPrice,
-      'chargePrice': chargePrice,
-      'setAmount': setAmount,
-      'chargeAmount': chargeAmount,
-      'chargeOption': chargeOption,
-    };
-  }
-
-  void updateCharge(String time, String price, String amount) {
-    chargeTime = time;
-    chargePrice = price;
-    chargeAmount = amount;
-    notifyListeners();
-  }
-
-  void setOption(String option, String data) {
-    switch (option) {
-      case "price":
-        chargeOption = option;
-        setPrice = data;
-        break;
-      case "time":
-        chargeOption = option;
-        setTime = data;
-        break;
-      case "amount":
-        chargeOption = option;
-        setAmount = data;
-        break;
-      case "full":
-        chargeOption = option;
-        setAmount = "200";
-        break;
-    }
-    notifyListeners();
-  }
-
-  void deleteData() {
-    carNum = null;
-    chargeAmount = null;
-    chargeOption = null;
-    chargePrice = null;
-    chargeTime = null;
-    setTime = null;
-    notifyListeners();
-  }
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'entryTime': entryTime,
+        'exitTime': exitTime,
+        'chargeStartTime': chargeStartTime,
+        'chargeTime': chargeTime,
+        'paymentTime': paymentTime,
+        'chargeAmount': chargeAmount,
+        'parkingAmount': parkingAmount,
+        'totalAmount': totalAmount,
+        'carNum': carNum,
+        'isPaid': isPaid,
+        'paymentId': paymentId,
+      };
 }
-
-final chargeDataProvider = ChangeNotifierProvider<CarData>((ref) {
-  return CarData();
-});
