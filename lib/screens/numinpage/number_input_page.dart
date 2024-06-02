@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pcg_pos/car_data.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
-import 'package:pcg_pos/car_data.dart';
 import 'package:pcg_pos/screens/caroutpage/car_out_page.dart';
 import 'package:pcg_pos/screens/numinpage/widget/keypad_container.dart';
 import 'package:pcg_pos/widget/toggle_app_bar.dart';
@@ -158,16 +158,19 @@ class _NumberInputPageState extends State<NumberInputPage> {
     }
   }
 
-  Future<void> _tryExitCar() async {
-    bool success = await ApiService.tryExitCar(carNum, widget.socket);
+  Future<void> _checkParking() async {
+    bool success = await ApiService.checkParking(carNum, widget.socket);
 
     if (success) {
+      CarData myData = await ApiService.getUnpaid(carNum, widget.socket);
+      print(myData);
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => CarOutPage(
             title: widget.title,
-            carNum: carNum,
+            carData: myData,
+            socket: widget.socket,
           ),
         ),
       );
@@ -250,8 +253,6 @@ class _NumberInputPageState extends State<NumberInputPage> {
                 flex: 1,
                 child: Consumer(
                   builder: (context, ref, child) {
-                    ref.read(chargeDataProvider).updateCarNum(carNum);
-                    debugPrint("${ref.read(chargeDataProvider)}");
                     return ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         alignment: Alignment.center,
@@ -264,7 +265,7 @@ class _NumberInputPageState extends State<NumberInputPage> {
                         ),
                       ),
                       onPressed: () async {
-                        _isEntry ? await _sendCarNum() : _tryExitCar();
+                        _isEntry ? await _sendCarNum() : _checkParking();
                       },
                       child: Text(
                         _isEntry ? '입차' : '출차',

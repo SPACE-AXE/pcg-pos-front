@@ -1,15 +1,22 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
+import 'package:pcg_pos/car_data.dart';
+import 'package:pcg_pos/services/pos_api.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:pcg_pos/widget/app_bar.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class CarOutPage extends StatefulWidget {
   final String title;
-  final String carNum;
+  final CarData carData;
+  final IO.Socket socket;
 
   const CarOutPage({
     super.key,
     required this.title,
-    required this.carNum,
+    required this.carData,
+    required this.socket,
   });
 
   @override
@@ -17,11 +24,54 @@ class CarOutPage extends StatefulWidget {
 }
 
 class _CarOutPageState extends State<CarOutPage> {
-  final String paymentId = "76164a21-8eb7-4de0-ae1e-df88f43647c7";
+  Future<void> _outParking() async {
+    bool success =
+        await ApiService.outParking(widget.carData.carNum, widget.socket);
+
+    if (success) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('성공'),
+            content: const Text('차량이 성공적으로 출차되었습니다.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                },
+                child: const Text('확인'),
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      // 요청이 실패했음을 나타내는 팝업 표시
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('실패'),
+            content: const Text('차량이 출차되지 않았습니다.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('확인'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    String qrData = '{"paymentId": "$paymentId"}';
+    String qrData = '{"paymentId": "${widget.carData.paymentId}"}';
     double qrSize = MediaQuery.of(context).size.width * 0.25;
 
     return Scaffold(
@@ -38,7 +88,7 @@ class _CarOutPageState extends State<CarOutPage> {
                 children: [
                   // 차량번호 입력
                   Text(
-                    widget.carNum,
+                    widget.carData.carNum,
                     style: const TextStyle(
                       fontSize: 40,
                     ),
@@ -62,7 +112,9 @@ class _CarOutPageState extends State<CarOutPage> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () async {
+                      await _outParking();
+                    },
                     child: Text(
                       '출차 확인',
                       style: const TextStyle(fontSize: 30),
