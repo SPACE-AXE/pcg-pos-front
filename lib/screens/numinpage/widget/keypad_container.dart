@@ -20,7 +20,6 @@ class _KeypadContainerState extends State<KeypadContainer> {
       children: [
         LetKeypad(
             addCarnum: widget.addCarNum, deleteCarNum: widget.deleteCarNum),
-        // VowelsKeyboard(setCarNum: widget.setCarNum),
         NumKeypad(
             addCarnum: widget.addCarNum, deleteCarNum: widget.deleteCarNum),
       ],

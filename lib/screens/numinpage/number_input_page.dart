@@ -137,7 +137,6 @@ class _NumberInputPageState extends State<NumberInputPage> {
         },
       );
     } else {
-      // 요청이 실패했음을 나타내는 팝업 표시
       showDialog(
         context: context,
         builder: (context) {
@@ -159,11 +158,10 @@ class _NumberInputPageState extends State<NumberInputPage> {
   }
 
   Future<void> _checkParking() async {
-    bool success = await ApiService.checkParking(carNum, widget.socket);
+    int statuscode = await ApiService.checkParking(carNum, widget.socket);
 
-    if (success) {
+    if (statuscode == 403) {
       CarData myData = await ApiService.getUnpaid(carNum, widget.socket);
-      print(myData);
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -174,8 +172,26 @@ class _NumberInputPageState extends State<NumberInputPage> {
           ),
         ),
       );
+    } else if (statuscode == 200) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('성공'),
+            content: const Text('차량이 사전정산 되었습니다.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                },
+                child: const Text('확인'),
+              ),
+            ],
+          );
+        },
+      );
     } else {
-      // 요청이 실패했음을 나타내는 팝업 표시
       showDialog(
         context: context,
         builder: (context) {

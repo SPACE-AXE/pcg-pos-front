@@ -25,7 +25,7 @@ class ApiService {
     }
   }
 
-  static Future<bool> checkParking(String carNum, IO.Socket socket) async {
+  static Future<int> checkParking(String carNum, IO.Socket socket) async {
     final completer = Completer<Map<String, dynamic>>();
 
     socket.emitWithAck('exit', {'carNum': carNum}, ack: (data) {
@@ -34,10 +34,10 @@ class ApiService {
 
     Map<String, dynamic> result = await completer.future;
 
-    if (result['statusCode'] == 403) {
-      return true;
+    if (result.containsKey('statusCode')) {
+      return result['statusCode'];
     } else {
-      return false;
+      return 200;
     }
   }
 
@@ -49,7 +49,6 @@ class ApiService {
     });
 
     Map<String, dynamic> result = await completer.future;
-    print(result);
 
     if (result.containsKey('statusCode')) {
       return false;
