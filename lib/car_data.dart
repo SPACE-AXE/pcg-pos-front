@@ -6,7 +6,7 @@ class CarData {
   final String entryTime;
   final String? exitTime;
   final String? chargeStartTime;
-  final String? chargeTime;
+  final int? chargeTime;
   final String? paymentTime;
   final int? chargeAmount;
   final int? parkingAmount;
