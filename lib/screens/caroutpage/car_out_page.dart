@@ -204,7 +204,7 @@ class _CarOutPageState extends State<CarOutPage> {
                 child: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       _buildRow('주차시간',
                           _parkingTime != null ? '$_parkingTime분' : '계산 중...'),
@@ -253,7 +253,7 @@ class _CarOutPageState extends State<CarOutPage> {
           child: Container(
             alignment: Alignment.centerRight,
             child: Text(
-              '$left:',
+              '$left |',
               style: TextStyle(
                 fontSize: isTotal ? 50 : 35,
               ),
